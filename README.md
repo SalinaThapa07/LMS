@@ -1,0 +1,2 @@
+# LMS
+Lecturer Management system

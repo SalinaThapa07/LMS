@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block title %}{{ dept_name }} Department{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f8f9fa;
+        padding: 20px;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #003366;
+    }
+
+    form {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    input[type="text"] {
+        padding: 10px 15px;
+        width: 300px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        margin-right: 10px;
+    }
+
+    button[type="submit"] {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #003366;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #005599;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        vertical-align: top;
+    }
+
+    th {
+        background-color: #003366;
+        color: white;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    ul {
+        padding-left: 20px;
+        margin: 0;
+    }
+
+    td ul li {
+        list-style-type: disc;
+    }
+
+    td[colspan="3"] {
+        text-align: center;
+        color: #999;
+        font-style: italic;
+    }
+</style>
+
+<h2>{{ dept_name }} Department Schedule</h2>
+
+<form method="get" action="">
+    <input type="text" name="q" placeholder="Search teacher..." value="{{ query|default:'' }}" />
+    <button type="submit">Search</button>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>Teacher</th>
+            <th>Semester</th>
+            <th>Courses</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entry in department_data %}
+        <tr>
+            <td>{{ entry.teacher.first_name }} {{ entry.teacher.last_name }}</td>
+            <td>
+                {% for course in entry.courses %}
+                    {{ course.semester }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </td>
+            <td>
+                <ul>
+                    {% for course in entry.courses %}
+                    <li>{{ course.name }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">No matching teacher found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

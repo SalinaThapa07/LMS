@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .leave-container {
+        max-width: 750px;
+        margin: 40px auto;
+        padding: 30px;
+        background-color: #f9fbfd;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .leave-container h2,
+    .leave-list h3 {
+        text-align: center;
+        color: #2c3e50;
+        margin-bottom: 20px;
+    }
+
+    form.leave-form label {
+        font-weight: 600;
+        margin-top: 15px;
+        display: block;
+        color: #34495e;
+    }
+
+    form.leave-form input[type="date"],
+    form.leave-form textarea {
+        width: 100%;
+        padding: 12px;
+        margin-top: 6px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        box-sizing: border-box;
+        font-size: 1rem;
+    }
+
+    form.leave-form textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    form.leave-form button {
+        width: 100%;
+        margin-top: 20px;
+        padding: 12px;
+        background-color: #3498db;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    form.leave-form button:hover {
+        background-color: #2980b9;
+    }
+
+    .message {
+        padding: 12px;
+        border-radius: 5px;
+        margin-top: 15px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .message.success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    .message.error {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    .leave-list {
+        margin-top: 40px;
+    }
+
+    .leave-list table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        font-size: 15px;
+    }
+
+    .leave-list th,
+    .leave-list td {
+        padding: 12px;
+        border: 1px solid #ccc;
+        text-align: left;
+    }
+
+    .leave-list th {
+        background-color: #ecf0f1;
+        color: #2c3e50;
+    }
+
+    .status {
+        font-weight: bold;
+        text-transform: capitalize;
+    }
+
+    .status-approved {
+        color: #27ae60;
+    }
+
+    .status-pending {
+        color: #e67e22;
+    }
+
+    .status-rejected {
+        color: #c0392b;
+    }
+
+    .back-link {
+        display: block;
+        text-align: center;
+        margin-top: 25px;
+        font-weight: 600;
+        color: #2980b9;
+        text-decoration: none;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="leave-container">
+    <h2>Request Leave</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post" class="leave-form">
+        {% csrf_token %}
+        <label for="date">Leave Date:</label>
+        <input type="date" name="date" id="date" required>
+
+        <label for="reason">Reason:</label>
+        <textarea name="reason" id="reason" placeholder="Enter reason (optional)"></textarea>
+
+        <button type="submit">Submit Request</button>
+    </form>
+
+    {% if leaves %}
+    <div class="leave-list">
+        <h3>Your Leave Requests</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Requested At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for leave in leaves %}
+                <tr>
+                    <td>{{ leave.date }}</td>
+                    <td>{{ leave.reason|default:"-" }}</td>
+                    <td class="status status-{{ leave.status|lower }}">{{ leave.status|capfirst }}</td>
+                    <td>{{ leave.created_at|date:"Y-m-d H:i" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+    <a href="{% url 'schedule' %}" class="back-link">← Back to Schedule</a>
+</div>
+{% endblock %}

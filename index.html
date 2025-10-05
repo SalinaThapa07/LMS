@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}  <!-- Load the static tag here -->
+
+{% block title %}Home | LMS{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-image: url('{% static "background.jpg" %}');
+        background-attachment: fixed;  /* Fix the background image */
+        background-position: center;  /* Center the image */
+        background-repeat: no-repeat;  /* Prevent repeating the image */
+        background-size: cover;  /* Cover the entire viewport */
+        height: 100vh;  /* Full height of the viewport */
+        color: #333;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 200px;
+        font-size: 100px;
+        color: rgb(143, 199, 150);
+    }
+
+    .slogan {
+        font-size: 50px;
+        text-align: center;
+        font-style: italic;
+        color: #27ae60;
+        margin-top: 50px;
+    }
+</style>
+
+<h1>
+    Welcome to LMS
+</h1>
+
+<div class="slogan">
+    "Streamlining Teaching, Empowering Lecturers."
+
+
+
+    
+{% if today_meeting %}
+<script>
+    // Only show once per session
+    if (!sessionStorage.getItem("meetingReminderShown")) {
+        const msg = "📢 Reminder: You have a department meeting today at {{ today_meeting.time }} in {{ today_meeting.venue }}.";
+        console.log(msg);
+        alert(msg);
+        sessionStorage.setItem("meetingReminderShown", "true");
+    }
+</script>
+{% endif %}
+</div>
+{% endblock %}

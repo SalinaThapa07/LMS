@@ -1,0 +1,145 @@
+
+{% extends "base.html" %}
+{% block title %}Departments | LMS{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f4f6f9;
+        margin: 0;
+        padding: 0;
+    }
+    button {
+        background-color:rgb(112, 156, 149); /* Green background color */
+        color: white;              /* White text */
+        font-size: 18px;           /* Font size */
+        padding: 18px 40px;        /* Vertical and horizontal padding */
+        border: 2px solidrgb(101, 139, 103); /* Border color matching the background */
+        border-radius: 50px;       /* Rounded edges */
+        text-transform: uppercase; /* Uppercase text for emphasis */
+        font-weight: bold;         /* Bold text */
+        cursor: pointer;          /* Pointer cursor on hover */
+        transition: all 0.3s ease; /* Smooth transition for all properties */
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+        outline: none;             /* Remove outline */
+        display: inline-block;     /* Inline-block display for proper alignment */
+        margin: 10px 0;            /* Space between buttons */
+    }
+    
+    button:hover {
+        background-color:rgb(80, 94, 81); /* Darker green on hover */
+        border-color: rgb(80, 94, 81);     /* Darker border on hover */
+        transform: translateY(-5px); /* Lift the button on hover */
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3); /* More prominent shadow on hover */
+    }
+    
+    button:active {
+        background-color:rgb(80, 94, 81); /* Even darker green on click */
+        border-color:rgb(80, 94, 81);     /* Dark border on click */
+        transform: translateY(2px); /* Button slightly pressed down */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow on click */
+    }
+    
+    button:focus {
+        outline: none;             /* No outline when focused */
+        box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3); /* Green outline effect */
+    }
+    
+    
+    
+
+    .departments-heading {
+        text-align: center;
+        font-size: 40px;
+        color: #003366;
+        margin-top: 70px;
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: 30px auto ;
+        padding: 20px;
+    }
+
+    .departments {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 50px;
+        justify-content: center;
+    }
+
+    .card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        width: 280px;
+        padding: 20px;
+        text-align: center;
+        transition: 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card h3 {
+        color: #003366;
+    }
+
+    .card p {
+        font-size: o.85em;
+        color: #555;
+    }
+</style>
+
+<h1 class="departments-heading">Our Departments</h1>
+
+<div class="department-container">
+    <!-- BIM Department Card -->
+    <button onclick="window.location.href='{% url 'department_detail' 'BIM' %}'" class="btn">
+        <div class="card">
+            <h3>BIM</h3>
+            <p>Bachelor of Information Management - a mix of IT and management.</p>
+        </div>
+    </button>
+
+    <!-- BCA Department Card -->
+    <button onclick="window.location.href='{% url 'department_detail' 'BCA' %}'" class="btn">
+        <div class="card">
+            <h3>BCA</h3>
+            <p>Bachelor of Computer Applications - focused on software development.</p>
+        </div>
+    </button>
+
+    <!-- CSIT Department Card -->
+    <button onclick="window.location.href='{% url 'department_detail' 'CSIT' %}'" class="btn">
+        <div class="card">
+            <h3>CSIT</h3>
+            <p>Computer Science and Information Technology - deep dive into core CS.</p>
+        </div>
+    </button>
+</div>
+{% endblock %}
+
+
+<!--
+<a href="{% url 'department_detail' 'BIM' %}" class="btn">
+    <div class="card">
+        <h3>BIM</h3>
+        <p>Bachelor of Information Management - a mix of IT and management.</p>
+    </div>
+</a>
+<a href="{% url 'department_detail' 'BCA' %}" class="btn">
+    <div class="card">
+        <h3>BCA</h3>
+        <p>Bachelor of Computer Applications - focused on software development.</p>
+    </div>
+</a>
+<a href="{% url 'department_detail' 'CSIT' %}" class="btn">
+    <div class="card">
+        <h3>CSIT</h3>
+        <p>Computer Science and Information Technology - deep dive into core CS.</p>
+    </div>
+</a>
+-->

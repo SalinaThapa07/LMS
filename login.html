@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecturer Management System Login</title>
+</head>
+<body>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    
+    .login-container {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        text-align: center;
+    }
+    
+    h2 {
+        margin-bottom: 20px;
+    }
+    
+    .input-group {
+        margin-bottom: 15px;
+        text-align: left;
+    }
+    
+    .input-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    
+    .input-group input, .input-group select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+    }
+    
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+    }
+    
+    button:hover {
+        background-color: #45a049;
+    }
+    
+    .error-message {
+        color: red;
+        font-size: 14px;
+    }
+</style>
+    <div class="login-container">
+        <h2>Login to Lecturer Management System</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <button type="submit" onclick="window.location.href='index/'">login</button>
+            <p class="error-message">{% if error_message %}{{ error_message }}{% endif %}</p>
+            <p>Don't have an account?<br>
+                <a href="signup/">Sign up</a></p>
+            </p>
+            
+        </form>
+    </div>
+</body>
+</html>

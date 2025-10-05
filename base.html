@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}LMS{% endblock %}</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      padding-top: 60px;
+    }
+
+    .navbar {
+      background-color: rgb(112, 156, 149);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .navbar ul {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      list-style: none;
+      padding: 0.5rem 0;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: black;
+      font-size: 16px;
+      padding: 12px 20px;
+      transition: background-color 0.3s ease;
+    }
+
+    .navbar a:hover {
+      background-color: rgb(241, 233, 233);
+      border-radius: 5px;
+    }
+
+    .profile-pic {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+      vertical-align: middle;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #333;
+      color: white;
+      margin-top: 500px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <ul>
+      <li><a href="{% url 'index' %}">Home</a></li>
+      <li><a href="{% url 'teacher_list' %}">Lecturers</a></li>
+      <li><a href="{% url 'departments' %}">Departments</a></li>
+      <li><a href="{% url 'schedule' %}">Schedule</a></li>
+      <li><a href="{% url 'create_meeting' %}">Meetings</a></li>
+      <li><a href="{% url 'contact' %}">About</a></li>
+
+      <li>
+        <a href="{% url 'profile' %}">
+          {% if request.user.is_authenticated and request.user.profile_picture %}
+            <img src="{{ request.user.profile_picture.url }}" class="profile-pic" alt="Profile" />
+          {% else %}
+            Profile
+          {% endif %}
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Lecturer List | LMS{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f9f9f9;
+        padding: 40px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #2c3e50;
+        margin-top: 100px;
+    }
+
+    table {
+        width: 80%;
+        margin: 30px auto;
+        border-collapse: collapse;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        background-color: #ffffff;
+    }
+
+    th, td {
+        padding: 12px 16px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #34495e;
+        color: white;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .profile-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .no-teachers {
+        text-align: center;
+        font-size: 18px;
+        color: #888;
+        margin-top: 30px;
+    }
+</style>
+
+<h1>Lecturer List</h1>
+
+{% if teachers %}
+    <table>
+        <thead>
+            <tr>
+                <th>Profile</th>
+                <th>Teacher ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Department</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for teacher in teachers %}
+                <tr>
+                    <td>
+                        <img
+                            src="{% if teacher.profile_picture %}{{ teacher.profile_picture.url }}{% else %}{% static 'images/default_profile.png' %}{% endif %}"
+                            alt="Profile Picture"
+                            class="profile-img"
+                        >
+                    </td>
+                    <td>{{ teacher.teacher_id }}</td>
+                    <td>{{ teacher.first_name }}</td>
+                    <td>{{ teacher.last_name }}</td>
+                    <td>{{ teacher.department }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p class="no-teachers">No lecturers found.</p>
+{% endif %}
+{% endblock %}

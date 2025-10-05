@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Class Schedule | LMS{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f4f4f4;
+    }
+
+    h1 {
+        text-align: center;
+        color: #4CAF50;
+        margin-top: 30px;
+    }
+
+    .search-container {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .search-container input[type="text"] {
+        padding: 10px;
+        width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .search-container button {
+        padding: 10px 15px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-left: 5px;
+    }
+
+    .leave-btn {
+        padding: 10px 15px;
+        background-color: #f44336;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-left: 10px;
+    }
+
+    table {
+        width: 90%;
+        margin: 0 auto 40px;
+        border-collapse: collapse;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #4CAF50;
+        color: white;
+        text-transform: uppercase;
+    }
+
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+     .on-leave {
+    background-color: #ffe6e6; /* light red */
+    color: red;
+    font-weight: bold;
+}
+
+    
+
+    .no-results {
+        text-align: center;
+        font-size: 18px;
+        color: #777;
+        margin-top: 30px;
+    }
+</style>
+
+<h1>Class Schedule</h1>
+
+<!-- 🔍 Search Bar + 📝 Leave Request Button -->
+<div class="search-container">
+    <form method="GET" style="display: inline;">
+        <input type="text" name="q" placeholder="Search by Teacher, Department, or Course" value="{{ query }}">
+        <button type="submit">Search</button>
+    </form>
+    <a href="{% url 'leave_request' %}" class="leave-btn">Request Leave</a>
+</div>
+
+<!-- 📋 Schedule Table -->
+{% if schedules %}
+<table>
+    <thead>
+        <tr>
+            <th>Course</th>
+            <th>Teacher</th>
+            <th>Department</th>
+            <th>Day</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Room</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for schedule in schedules %}
+        <tr>
+            <td>{{ schedule.course }}</td>
+            <td>
+                <span style="
+                    {% if schedule.teacher.id in leave_today_teachers %}
+                        color: red;
+                    {% endif %}
+                ">
+                    {{ schedule.teacher.get_full_name|default:schedule.teacher.username }}
+                </span>
+            </td>
+            <td>{{ schedule.dept.name }}</td>
+            <td>{{ schedule.day }}</td>
+            <td>{{ schedule.date }}</td>
+            <td>{{ schedule.start_time }} - {{ schedule.end_time }}</td>
+            <td>{{ schedule.room }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+    </tbody>
+</table>
+{% else %}
+    <div class="no-results">No schedule found for your search.</div>
+{% endif %}
+
+{% endblock %}
